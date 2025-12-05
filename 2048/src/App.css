@@ -1,3 +1,7 @@
+body {
+  font-family: "Press Start 2P", cursive;
+}
+
 /* =========================================================
     COMPONENTS — GRID
 ========================================================= */
@@ -160,4 +164,18 @@
   width: 200px;
   border-radius: 6px;
   font-weight: bold;
+}
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.scoreboard .box {
+  background: #8f7a66;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 16px;
 }

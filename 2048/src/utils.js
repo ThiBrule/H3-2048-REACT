@@ -1,11 +1,13 @@
-// src/utils.js
-
-// Crée une grille vide
+// --------------------------------------------
+// CREATE EMPTY GRID
+// --------------------------------------------
 export function createEmptyGrid(size = 4) {
   return Array.from({ length: size }, () => Array(size).fill(0));
 }
 
-// Ajoute une tuile (2 ou 4) dans une case vide
+// --------------------------------------------
+// ADD RANDOM TILE
+// --------------------------------------------
 export function addRandomTile(grid) {
   const emptyCells = [];
 
@@ -24,55 +26,86 @@ export function addRandomTile(grid) {
   return newGrid;
 }
 
-// --------- fonctions internes pour les mouvements ---------
 
+// --------------------------------------------
+// INTERNAL — COMPRESS
+// --------------------------------------------
 function compress(row) {
   const newRow = row.filter(v => v !== 0);
   while (newRow.length < row.length) newRow.push(0);
   return newRow;
 }
 
+
+// --------------------------------------------
+// INTERNAL — MERGE with score
+// --------------------------------------------
 function merge(row) {
+  let gained = 0;
+
   for (let i = 0; i < row.length - 1; i++) {
     if (row[i] !== 0 && row[i] === row[i + 1]) {
       row[i] *= 2;
+      gained += row[i];
       row[i + 1] = 0;
     }
   }
-  return row;
+
+  return { row, gained };
 }
 
-// --------- MOVE LEFT ---------
+
+// --------------------------------------------
+// MOVE LEFT
+// --------------------------------------------
 export function moveLeft(grid) {
-  return grid.map(row => {
-    let line = compress(row);
-    line = merge(line);
+  let totalGained = 0;
+
+  const newGrid = grid.map(row => {
+    let line = compress([...row]);
+    const mergeResult = merge(line);
+    line = mergeResult.row;
+    totalGained += mergeResult.gained;
     line = compress(line);
     return line;
   });
+
+  return { grid: newGrid, gained: totalGained };
 }
 
-// --------- MOVE RIGHT ---------
+
+// --------------------------------------------
+// MOVE RIGHT
+// --------------------------------------------
 export function moveRight(grid) {
-  return grid.map(row => {
-    let line = [...row].reverse();
-    line = compress(line);
-    line = merge(line);
-    line = compress(line);
-    return line.reverse();
+  let totalGained = 0;
+
+  const newGrid = grid.map(row => {
+    let line = compress([...row].reverse());
+    const mergeResult = merge(line);
+    line = mergeResult.row;
+    totalGained += mergeResult.gained;
+    line = compress(line).reverse();
+    return line;
   });
+
+  return { grid: newGrid, gained: totalGained };
 }
 
-// --------- MOVE UP ---------
+
+// --------------------------------------------
+// MOVE UP
+// --------------------------------------------
 export function moveUp(grid) {
+  let totalGained = 0;
   const size = grid.length;
   const newGrid = createEmptyGrid(size);
 
   for (let col = 0; col < size; col++) {
-    let column = grid.map(row => row[col]);
-
-    column = compress(column);
-    column = merge(column);
+    let column = compress(grid.map(row => row[col]));
+    const mergeResult = merge(column);
+    column = mergeResult.row;
+    totalGained += mergeResult.gained;
     column = compress(column);
 
     for (let row = 0; row < size; row++) {
@@ -80,26 +113,29 @@ export function moveUp(grid) {
     }
   }
 
-  return newGrid;
+  return { grid: newGrid, gained: totalGained };
 }
 
-// --------- MOVE DOWN ---------
+
+// --------------------------------------------
+// MOVE DOWN
+// --------------------------------------------
 export function moveDown(grid) {
+  let totalGained = 0;
   const size = grid.length;
   const newGrid = createEmptyGrid(size);
 
   for (let col = 0; col < size; col++) {
-    let column = grid.map(row => row[col]).reverse();
-
-    column = compress(column);
-    column = merge(column);
-    column = compress(column);
-    column = column.reverse();
+    let column = compress(grid.map(row => row[col]).reverse());
+    const mergeResult = merge(column);
+    column = mergeResult.row;
+    totalGained += mergeResult.gained;
+    column = compress(column).reverse();
 
     for (let row = 0; row < size; row++) {
       newGrid[row][col] = column[row];
     }
   }
 
-  return newGrid;
+  return { grid: newGrid, gained: totalGained };
 }

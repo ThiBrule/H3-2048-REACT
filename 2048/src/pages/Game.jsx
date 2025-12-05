@@ -11,54 +11,75 @@ import {
 
 export default function Game({ gridSize }) {
   const [grid, setGrid] = useState(null);
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(
+    Number(localStorage.getItem("bestScore")) || 0
+  );
 
-  // Initialisation de la grille
+  // Initialisation
   useEffect(() => {
     let g = createEmptyGrid(gridSize);
     g = addRandomTile(g);
     g = addRandomTile(g);
     setGrid(g);
+    setScore(0);
   }, [gridSize]);
 
-  // Gestion du clavier
+
+  // Fonction mise à jour des scores
+  function updateScore(gained) {
+    const newScore = score + gained;
+    setScore(newScore);
+
+    if (newScore > bestScore) {
+      localStorage.setItem("bestScore", newScore);
+      setBestScore(newScore);
+    }
+  }
+
+
+  // Gestion des touches
   useEffect(() => {
     function handleKey(e) {
       if (!grid) return;
 
-      setGrid(prev => {
-        let next = prev;
+      const moves = {
+        ArrowLeft: moveLeft,
+        ArrowRight: moveRight,
+        ArrowUp: moveUp,
+        ArrowDown: moveDown,
+      };
 
-        if (e.key === "ArrowLeft") next = moveLeft(prev);
-        if (e.key === "ArrowRight") next = moveRight(prev);
-        if (e.key === "ArrowUp") next = moveUp(prev);
-        if (e.key === "ArrowDown") next = moveDown(prev);
+      const fn = moves[e.key];
+      if (!fn) return;
 
-        // Si aucun changement → pas de nouvelle tuile
-        if (JSON.stringify(prev) === JSON.stringify(next)) {
-          return prev;
-        }
+      const result = fn(grid);
 
-        return addRandomTile(next); // Ajoute une tuile
-      });
+      // Si rien n'a changé → on ne fait rien
+      if (JSON.stringify(result.grid) === JSON.stringify(grid)) return;
+
+      updateScore(result.gained);
+
+      setGrid(prev => addRandomTile(result.grid));
     }
 
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [grid]);
+  }, [grid, score, bestScore]);
 
-  if (!grid) {
-    return (
-      <div className="game-page">
-        <h2>Jeu 2048</h2>
-        <p>Chargement…</p>
-      </div>
-    );
-  }
+
+
+  if (!grid) return <p>Chargement…</p>;
 
   return (
     <div className="game-page">
-      <h2>Jeu 2048</h2>
-      <p>Grille sélectionnée : {gridSize}×{gridSize}</p>
+      <h2>2048</h2>
+      <p>Grille : {gridSize}×{gridSize}</p>
+
+      <div className="scoreboard">
+        <div className="box">Score : {score}</div>
+        <div className="box">Best : {bestScore}</div>
+      </div>
 
       <Grid grid={grid} />
     </div>
