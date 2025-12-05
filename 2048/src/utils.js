@@ -139,3 +139,25 @@ export function moveDown(grid) {
 
   return { grid: newGrid, gained: totalGained };
 }
+export function isGameOver(grid) {
+  const size = grid.length;
+
+  // S'il reste un 0 → pas game over
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+      if (grid[r][c] === 0) return false;
+    }
+  }
+
+  // Test si un mouvement est possible
+  const moves = [moveLeft, moveRight, moveUp, moveDown];
+
+  for (let move of moves) {
+    const result = move(grid);
+    if (JSON.stringify(result.grid) !== JSON.stringify(grid)) {
+      return false; 
+    }
+  }
+
+  return true; 
+}

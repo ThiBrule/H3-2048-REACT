@@ -1,30 +1,32 @@
-
 const BASE_URL =
-  import.meta.env.VITE_API_URL ||
   "https://69335884e5a9e342d2728ba2.mockapi.io/api/2048/Hetic";
 
-export async function getLeaderboard() {
-  const response = await fetch(`${BASE_URL}/leaderboard`);
+  
+export async function postScore(name, score) {
+  try {
+    const response = await fetch(`${BASE_URL}/leaderboard`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        score,
+        date: new Date().toISOString(),
+      }),
+    });
 
-  if (!response.ok) {
-    throw new Error("Erreur lors du chargement du leaderboard");
+    return await response.json();
+  } catch (error) {
+    console.error("Erreur POST score :", error);
   }
-
-  return response.json(); 
 }
 
-export async function postScore(player, score) {
-  const response = await fetch(`${BASE_URL}/leaderboard`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ player, score }),
-  });
 
-  if (!response.ok) {
-    throw new Error("Erreur lors de l'envoi du score");
+export async function getLeaderboard() {
+  try {
+    const response = await fetch(`${BASE_URL}/leaderboard`);
+    return await response.json();
+  } catch (error) {
+    console.error("Erreur GET leaderboard :", error);
+    return [];
   }
-
-  return response.json(); 
 }
