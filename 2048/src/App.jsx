@@ -1,12 +1,14 @@
+// src/App.jsx
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Game from "./pages/Game";
-import Leaderboard from "./pages/Leaderboard";
+import Home from "./pages/Home.jsx";
+import Game from "./pages/Game.jsx";
+import Leaderboard from "./pages/Leaderboard.jsx";
 
 export default function App() {
-
+  // taille de grille globale (4 ou 5)
   const [gridSize, setGridSize] = useState(4);
+
   return (
     <Router>
       <Routes>

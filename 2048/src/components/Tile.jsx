@@ -1,9 +1,12 @@
-export default function Tile({ value }) {
-  const tileClass =
-    value === 0 ? "tile empty" : `tile tile-${value}`;
+export default function Tile({ value, merged }) {
+  // Classes CSS dynamiques
+  const className =
+    value === 0
+      ? "tile empty"
+      : `tile tile-${value} ${merged ? "merged" : ""}`;
 
   return (
-    <div className={tileClass}>
+    <div className={className}>
       {value !== 0 ? value : ""}
     </div>
   );

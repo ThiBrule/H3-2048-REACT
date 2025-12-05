@@ -9,10 +9,19 @@
   margin-top: 20px;
 }
 
+.grid-4 {
+  grid-template-columns: repeat(4, 80px);
+}
+
+.grid-5 {
+  grid-template-columns: repeat(5, 80px);
+}
+
+
+
 /* =========================================================
     COMPONENTS — TILES
 ========================================================= */
-
 
 .tile {
   width: 80px;
@@ -23,8 +32,8 @@
   font-size: 26px;
   border-radius: 6px;
   font-weight: bold;
+  transition: transform 0.25s ease-in-out;
   color: #f9f6f2;
-  transition: transform 0.15s ease-in-out;
 }
 
 /* Case vide */
@@ -33,33 +42,55 @@
   color: transparent;
 }
 
-/* Animation */
+/* Animation apparition */
 .tile:not(.empty) {
-  animation: pop 0.15s ease-out;
+  animation: pop 0.25s cubic-bezier(0.25, 1.5, 0.5, 1);
 }
 
 @keyframes pop {
-  0% { transform: scale(0.6); }
-  100% { transform: scale(1); }
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
+/* Animation de fusion */
+.tile.merged {
+  animation: merge-pop 0.3s ease-out;
+}
+
+@keyframes merge-pop {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0px rgba(255,255,255,0.4);
+  }
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(255,255,255,0.9);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0px rgba(255,255,255,0);
+  }
+}
+
+/* Couleurs numéros */
 .tile-2 { background-color: #eee4da; color: #776e65; font-size:22px; }
 .tile-4 { background-color: #ede0c8; color: #776e65; font-size:22px; }
-.tile-8 { background-color: #f2b179; font-size:22px;}
-.tile-16 { background-color: #f59563;font-size:22px; }
-.tile-32 { background-color: #f67c5f; font-size:22px;}
-.tile-64 { background-color: #f65e3b; font-size:22px;}
-.tile-128 { background-color: #edcf72; font-size: 22px; }
-.tile-256 { background-color: #edcc61; font-size: 22px; }
-.tile-512 { background-color: #edc850; font-size: 22px; }
-.tile-1024 { background-color: #edc53f; font-size: 20px; }
-.tile-2048 { background-color: #edc22e; font-size: 20px; }
-.tile-4096  { background-color: #3c3a32; font-size: 20px; }
-.tile-8192  { background-color: #5c5a52; font-size: 20px; }
-.tile-16384 { background-color: #776e65; font-size: 20px; }
-.tile-32768 { background-color: #9c8f80; font-size: 18px; }
-.tile-65536 { background-color: #bbada0; font-size: 18px; }
-.tile-131072 { background-color: #d6cec4; font-size: 18px; }
+.tile-8 { background-color: #f2b179; font-size:22px; }
+.tile-16 { background-color: #f59563; font-size:22px; }
+.tile-32 { background-color: #f67c5f; font-size:22px; }
+.tile-64 { background-color: #f65e3b; font-size:22px; }
+.tile-128 { background-color: #edcf72; font-size:22px; }
+.tile-256 { background-color: #edcc61; font-size:22px; }
+.tile-512 { background-color: #edc850; font-size:22px; }
+.tile-1024 { background-color: #edc53f; font-size:20px; }
+.tile-2048 { background-color: #edc22e; font-size:20px; }
+.tile-4096 { background-color: #3c3a32; font-size:20px; }
+.tile-8192 { background-color: #5c5a52; font-size:20px; }
+.tile-16384 { background-color: #776e65; font-size:20px; }
+.tile-32768 { background-color: #9c8f80; font-size:18px; }
+.tile-65536 { background-color: #bbada0; font-size:18px; }
+.tile-131072 { background-color: #d6cec4; font-size:18px; }
+
 
 
 /* =========================================================
@@ -99,12 +130,13 @@
   background-color: #8f7a66;
   color: white;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s ease-in-out;
 }
 
 .home button:hover {
   background-color: #9e8a76;
 }
+
 
 
 /* =========================================================
