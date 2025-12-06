@@ -1,4 +1,4 @@
-# 🎮 Projet 2048 — React / Vite (HETIC - S1)
+# 🎮 Projet Fusioncraft — React / Vite (HETIC - S1)
 
 Ce projet est une version web du célèbre jeu **2048**, développée en **React** avec **Vite**, dans le cadre du module de développement Front-End.  
 L’objectif est de créer un jeu fonctionnel, moderne, responsive et connecté à un **leaderboard via une API REST**.

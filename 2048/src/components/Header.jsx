@@ -8,7 +8,7 @@ export default function Header({ onPause, onRestart }) {
   const showBack = location.pathname !== "/";
   const isGamePage = location.pathname.startsWith("/game");
 
-  // THEME STATE
+
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function Header({ onPause, onRestart }) {
   return (
     <header className="header">
 
-      {/* Bouton retour */}
+
       {showBack && (
         <button className="styled-btn back-btn" onClick={() => navigate("/")}>
           ← Retour
@@ -42,7 +42,6 @@ export default function Header({ onPause, onRestart }) {
         </>
       )}
 
-      {/* Theme toggle */}
       <button className="styled-btn theme-btn" onClick={toggleTheme}>
         {theme === "light" ? "Mode Sombre" : "Mode Clair"}
       </button>

@@ -27,11 +27,13 @@ export default function App() {
         onRestart={() => controls.current.restart()}
       />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/game/:size" element={<GameWrapper controls={controls} />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
-      </Routes>
+      <div className="main-wrapper">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/game/:size" element={<GameWrapper controls={controls} />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+        </Routes>
+      </div>
 
       <Footer />
     </BrowserRouter>

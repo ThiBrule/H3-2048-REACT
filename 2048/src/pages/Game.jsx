@@ -15,20 +15,11 @@ import {
 import { postScore } from "../api";
 
 export default function Game({ gridSize, headerControls }) {
-  // ---------------------------------
-  // PSEUDO JOUEUR
-  // ---------------------------------
+
   const savedName = localStorage.getItem("playerName") || "";
   const [playerName, setPlayerName] = useState(savedName);
 
-  // ❗ POPUP SUPPRIMÉE ICI (comme demandé)
-  // if (!playerName) {
-  //   return <PlayerName onSave={setPlayerName} />;
-  // }
 
-  // ---------------------------------
-  // STATES DU JEU
-  // ---------------------------------
   const [grid, setGrid] = useState(null);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(
@@ -37,9 +28,6 @@ export default function Game({ gridSize, headerControls }) {
   const [gameOver, setGameOver] = useState(false);
   const [paused, setPaused] = useState(false);
 
-  // ---------------------------------
-  // INITIALISATION
-  // ---------------------------------
   useEffect(() => {
     let g = createEmptyGrid(gridSize);
     g = addRandomTile(g);
@@ -50,9 +38,7 @@ export default function Game({ gridSize, headerControls }) {
     setPaused(false);
   }, [gridSize]);
 
-  // ---------------------------------
-  // SCORE & BEST SCORE
-  // ---------------------------------
+
   function updateScore(gained) {
     const newScore = score + gained;
     setScore(newScore);
@@ -63,9 +49,6 @@ export default function Game({ gridSize, headerControls }) {
     }
   }
 
-  // ---------------------------------
-  // API — POST SCORE FINAL
-  // ---------------------------------
   async function sendScoreToAPI(finalScore) {
     if (!playerName) return;
     try {
@@ -75,9 +58,7 @@ export default function Game({ gridSize, headerControls }) {
     }
   }
 
-  // ---------------------------------
-  // PAUSE & RESTART depuis le Header
-  // ---------------------------------
+
   useEffect(() => {
     if (!headerControls) return;
 
@@ -90,9 +71,6 @@ export default function Game({ gridSize, headerControls }) {
     };
   });
 
-  // ---------------------------------
-  // TOUCHES CLAVIER
-  // ---------------------------------
   useEffect(() => {
     function handleKey(e) {
       if (!grid || gameOver || paused) return;
@@ -128,9 +106,6 @@ export default function Game({ gridSize, headerControls }) {
 
   }, [grid, score, gameOver, paused]);
 
-  // ---------------------------------
-  // RESTART
-  // ---------------------------------
   function restart() {
     let g = createEmptyGrid(gridSize);
     g = addRandomTile(g);
@@ -141,9 +116,6 @@ export default function Game({ gridSize, headerControls }) {
     setPaused(false);
   }
 
-  // ---------------------------------
-  // RENDER
-  // ---------------------------------
   if (!grid) return <p>Chargement…</p>;
 
   return (
@@ -156,7 +128,6 @@ export default function Game({ gridSize, headerControls }) {
 
       <Grid grid={grid} />
 
-      {/* PAUSE */}
       {paused && !gameOver && (
         <div className="pause-overlay">
           <div className="pause-box" onClick={() => setPaused(false)}>
@@ -165,7 +136,6 @@ export default function Game({ gridSize, headerControls }) {
         </div>
       )}
 
-      {/* GAME OVER */}
       {gameOver && (
         <div className="gameover-modal">
           <div className="gameover-box">

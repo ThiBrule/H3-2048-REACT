@@ -1,5 +1,4 @@
 export default function Tile({ value, merged }) {
-  // Classes CSS dynamiques
   const className =
     value === 0
       ? "tile empty"

@@ -139,7 +139,7 @@ body {
   transition: transform 0.15s ease-in-out;
 }
 
-/* Apparition smooth */
+
 .tile:not(.empty) {
   animation: tilePop 0.22s cubic-bezier(0.3, 1.4, 0.6, 1);
 }
@@ -150,7 +150,7 @@ body {
   100% { transform: scale(1); }
 }
 
-/* Fusion smooth */
+
 .tile.merged {
   animation: tileMerge 0.25s ease-out;
 }
@@ -161,31 +161,31 @@ body {
   100% { transform: scale(1); }
 }
 
-/* Case vide */
+
 .tile.empty {
   background-color: #6d6d6d;
   color: transparent;
 }
 
-/* Palette Minecraft */
-.tile-2      { background: #d4c088; color: #3b3b3b; }
-.tile-4      { background: #c4a96c; color: #3b3b3b; }
-.tile-8      { background: #d0812a; }
-.tile-16     { background: #a05a2b; }
-.tile-32     { background: #7a401a; }
-.tile-64     { background: #593419; }
 
-.tile-128    { background: #3a6ea5; }     /* Eau */
-.tile-256    { background: #2e8b57; }     /* Émeraude */
-.tile-512    { background: #1e90ff; }     /* Diamant */
-.tile-1024   { background: #b22222; }     /* Redstone */
-.tile-2048   { background: #4b0082; }     /* Obsidienne */
-.tile-4096   { background: #9400d3; }
-.tile-8192   { background: #228b22; }
-.tile-16384  { background: #d2691e; }
-.tile-32768  { background: #daa520; }     /* Or */
-.tile-65536  { background: #cd853f; }
-.tile-131072 { background: #000000; }
+.tile-2      { background: #d4c088; color: #3b3b3b; font-size: 22px;}
+.tile-4      { background: #c4a96c; color: #3b3b3b; font-size: 22px;}
+.tile-8      { background: #d0812a; font-size: 22px; }
+.tile-16     { background: #a05a2b; font-size: 22px;}
+.tile-32     { background: #7a401a; font-size: 22px; }
+.tile-64     { background: #593419; font-size: 22px;}
+
+.tile-128    { background: #3a6ea5; font-size: 22px;}    
+.tile-256    { background: #2e8b57; font-size: 22px;}     
+.tile-512    { background: #1e90ff; font-size: 22px;}     
+.tile-1024   { background: #b22222; font-size: 20px;}     
+.tile-2048   { background: #4b0082; font-size: 20px;}     
+.tile-4096   { background: #9400d3; font-size: 20px;}
+.tile-8192   { background: #228b22; font-size: 20px;}
+.tile-16384  { background: #d2691e; font-size: 18px;}
+.tile-32768  { background: #daa520; font-size: 18px; }     
+.tile-65536  { background: #cd853f; font-size: 18px; }
+.tile-131072 { background: #000000; font-size: 18px; }
 
 
 
@@ -226,23 +226,44 @@ body {
 }
 
 .gameover-box {
-  background: #faf8ef;
+  background: #ffffff;         
+  color: #000000;
   padding: 30px;
   border-radius: 12px;
   text-align: center;
   width: 260px;
+  border: 4px solid #000000;
 }
+
+.gameover-box h2 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: #000000;
+}
+
+.gameover-box p {
+  margin: 8px 0;
+  color: #000000;
+  font-size: 14px;
+}
+
 
 .gameover-box button {
   margin-top: 20px;
   padding: 10px 16px;
-  background: #8b6f47;
-  border: none;
+  font-family: "Press Start 2P", cursive;
+  background: #ffffff;                       
+  color: #000000;                             
+  border: 3px solid #000000;                  
   border-radius: 6px;
-  color: white;
   cursor: pointer;
+  transition: 0.15s ease-out;
 }
 
+.gameover-box button:hover {
+  background: #ededed;                        
+  transform: scale(1.05);                     
+}
 
 /* ============================
    PAUSE OVERLAY
@@ -280,25 +301,37 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 200px;
+  width: 260px;
   margin: 25px auto 0;
 }
 
+
 .home button {
-  padding: 12px 18px;
-  font-size: 18px;
+  padding: 14px 20px;
+  font-size: 14px;
+  font-family: "Press Start 2P", cursive;
   border-radius: 6px;
-  border: none;
-  background-color: #8b6f47;
-  color: white;
+  background-color: #8b6f47; 
+  color: #ffffff; 
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: 0.15s ease;
 }
 
 .home button:hover {
-  background-color: #a7885d;
+  background-color:#b28e5b;         
+  transform: scale(1.05);
 }
 
+
+[data-theme="dark"] .home button {
+  background: #3b1f1f;                
+  color: #ffffff;
+  border-color: #8b3a3a;
+}
+
+[data-theme="dark"] .home button:hover {
+  background: #542424;
+}
 
 /* ============================
    LEADERBOARD
@@ -379,4 +412,9 @@ body {
   border-radius: 6px;
   font-family: "Press Start 2P", cursive;
   font-size: 12px;
+}
+[data-theme="dark"] .leaderboard-page li {
+  background: #4b1f1f;
+  color: #ffffff;
+  border: 2px solid #8b3a3a;
 }

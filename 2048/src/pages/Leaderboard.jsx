@@ -8,7 +8,7 @@ export default function Leaderboard() {
     async function load() {
       const data = await getLeaderboard();
 
-      // tri du meilleur au moins bon
+
       data.sort((a, b) => b.score - a.score);
 
       setScores(data);

@@ -1,13 +1,8 @@
-// --------------------------------------------
-// CREATE EMPTY GRID
-// --------------------------------------------
 export function createEmptyGrid(size = 4) {
   return Array.from({ length: size }, () => Array(size).fill(0));
 }
 
-// --------------------------------------------
-// ADD RANDOM TILE
-// --------------------------------------------
+
 export function addRandomTile(grid) {
   const emptyCells = [];
 
@@ -26,20 +21,12 @@ export function addRandomTile(grid) {
   return newGrid;
 }
 
-
-// --------------------------------------------
-// INTERNAL — COMPRESS
-// --------------------------------------------
 function compress(row) {
   const newRow = row.filter(v => v !== 0);
   while (newRow.length < row.length) newRow.push(0);
   return newRow;
 }
 
-
-// --------------------------------------------
-// INTERNAL — MERGE with score
-// --------------------------------------------
 function merge(row) {
   let gained = 0;
 
@@ -54,10 +41,6 @@ function merge(row) {
   return { row, gained };
 }
 
-
-// --------------------------------------------
-// MOVE LEFT
-// --------------------------------------------
 export function moveLeft(grid) {
   let totalGained = 0;
 
@@ -74,9 +57,6 @@ export function moveLeft(grid) {
 }
 
 
-// --------------------------------------------
-// MOVE RIGHT
-// --------------------------------------------
 export function moveRight(grid) {
   let totalGained = 0;
 
@@ -92,10 +72,6 @@ export function moveRight(grid) {
   return { grid: newGrid, gained: totalGained };
 }
 
-
-// --------------------------------------------
-// MOVE UP
-// --------------------------------------------
 export function moveUp(grid) {
   let totalGained = 0;
   const size = grid.length;
@@ -116,10 +92,6 @@ export function moveUp(grid) {
   return { grid: newGrid, gained: totalGained };
 }
 
-
-// --------------------------------------------
-// MOVE DOWN
-// --------------------------------------------
 export function moveDown(grid) {
   let totalGained = 0;
   const size = grid.length;
@@ -142,14 +114,13 @@ export function moveDown(grid) {
 export function isGameOver(grid) {
   const size = grid.length;
 
-  // S'il reste un 0 → pas game over
+  
   for (let r = 0; r < size; r++) {
     for (let c = 0; c < size; c++) {
       if (grid[r][c] === 0) return false;
     }
   }
 
-  // Test si un mouvement est possible
   const moves = [moveLeft, moveRight, moveUp, moveDown];
 
   for (let move of moves) {

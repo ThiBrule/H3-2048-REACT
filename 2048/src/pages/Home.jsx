@@ -8,7 +8,6 @@ export default function Home() {
   const savedName = localStorage.getItem("playerName");
   const [playerName, setPlayerName] = useState(savedName || "");
 
-  // Si aucun pseudo → popup
   if (!playerName) {
     return <PlayerName onSave={setPlayerName} />;
   }
