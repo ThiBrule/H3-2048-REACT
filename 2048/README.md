@@ -1,16 +1,35 @@
-# React + Vite
+# 🎮 Projet 2048 — React / Vite (HETIC - S1)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ce projet est une version web du célèbre jeu **2048**, développée en **React** avec **Vite**, dans le cadre du module de développement Front-End.  
+L’objectif est de créer un jeu fonctionnel, moderne, responsive et connecté à un **leaderboard via une API REST**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Fonctionnalités principales
 
-## React Compiler
+### 🧩 Niveau 1 — Fonctionnalités de base
+- Grille 4×4 et 5×5 jouable  
+- Apparition aléatoire de tuiles (2 ou 4)  
+- Déplacements via les flèches du clavier  
+- Fusion des tuiles selon les règles du 2048  
+- Calcul du score en temps réel  
+- Détection automatique de fin de partie (**Game Over**)  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+### 🌐 Niveau 2 — API & Leaderboard
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Le jeu est connecté à une API MockAPI.io pour :
+- 🔸 **Enregistrer le score final** (`POST`)  
+- 🔸 **Afficher le classement global** (`GET`)  
+- 🔸 Afficher les meilleurs scores  
+- 🔸 Associer chaque score à un **pseudo joueur**, demandé lors de la première visite  
+
+---
+
+### 📦 Installation des modules
+
+Tous les modules nécessaires — dont **react-router-dom**, React, Axios, etc. — sont automatiquement installés avec la commande :
+
+```bash
+npm install
