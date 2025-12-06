@@ -1,22 +1,18 @@
-// src/pages/Home.jsx
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function Home({ setGridSize }) {
-  const navigate = useNavigate();
-
-  function startGame(size) {
-    setGridSize(size);
-    navigate("/game");
-  }
-
+export default function Home() {
   return (
     <div className="home">
-      <h1>2048 HETIC</h1>
-      <p>Choisis ta taille de grille :</p>
+      <h1>2048 Challenge</h1>
 
       <div className="actions">
-        <button onClick={() => startGame(4)}>Grille 4×4</button>
-        <button onClick={() => startGame(5)}>Grille 5×5</button>
+        <Link to="/game/4">
+          <button>Grille 4×4</button>
+        </Link>
+
+        <Link to="/game/5">
+          <button>Grille 5×5</button>
+        </Link>
 
         <Link to="/leaderboard">
           <button>Leaderboard</button>

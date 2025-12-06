@@ -32,7 +32,7 @@ export default function Game({ gridSize }) {
   }, [gridSize]);
 
   // -----------------------------
-  // SCORE + BEST SCORE
+  // SCORE & BEST SCORE
   // -----------------------------
   function updateScore(gained) {
     const newScore = score + gained;
@@ -48,7 +48,7 @@ export default function Game({ gridSize }) {
   // ENVOI DU SCORE À L'API
   // -----------------------------
   async function sendScoreToAPI(finalScore) {
-    await postScore("Player", finalScore); 
+    await postScore("Player", finalScore);
   }
 
   // -----------------------------
@@ -70,17 +70,14 @@ export default function Game({ gridSize }) {
 
       const result = fn(grid);
 
-      // Si rien ne change → pas de mouvement
+      // si rien ne change : pas de mouvement
       if (JSON.stringify(result.grid) === JSON.stringify(grid)) return;
 
-      // maj du score
       updateScore(result.gained);
 
-      // Ajout tuile aléatoire
       const newGrid = addRandomTile(result.grid);
       setGrid(newGrid);
 
-      // Vérification Game Over
       if (isGameOver(newGrid)) {
         setGameOver(true);
         sendScoreToAPI(score + result.gained);
