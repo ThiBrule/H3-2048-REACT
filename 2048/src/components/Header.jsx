@@ -30,9 +30,8 @@ export default function Header({ onPause, onRestart }) {
         </button>
       )}
 
-      <h1 className="title">2048</h1>
+      <h1 className="title">Fusioncraft</h1>
 
-      {/* Affiché uniquement en jeu */}
       {isGamePage && (
         <>
           <button className="styled-btn" onClick={onPause}> Pause</button>

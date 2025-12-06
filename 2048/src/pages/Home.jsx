@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <div className="home">
-      <h1>2048</h1>
+      <h1>Fusioncraft</h1>
 
       <div className="actions">
         <button onClick={() => navigate("/game/4")}>Grille 4×4</button>
