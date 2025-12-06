@@ -1,21 +1,63 @@
-/* =========================================================
-    GLOBAL FONT
-========================================================= */
+/* ---------------------------------------------------------
+   GLOBAL
+--------------------------------------------------------- */
 
 body {
   font-family: "Press Start 2P", cursive;
+  background: #faf8ef;
+  color: #3c3a32;
+  margin: 0;
+  padding: 0;
 }
 
-button {
-  font-family: "Press Start 2P", cursive !important;
-  letter-spacing: 1px;
+[data-theme="dark"] {
+  background: #121212;
+  color: #f5f5f5;
 }
 
+/* ---------------------------------------------------------
+   HEADER
+--------------------------------------------------------- */
 
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  position: relative;
+}
 
-/* =========================================================
-    COMPONENTS — GRID
-========================================================= */
+.title {
+  font-size: 32px;
+  margin: 0;
+}
+
+.styled-btn {
+  font-family: "Press Start 2P", cursive;
+  padding: 10px 14px;
+  background: #8f7a66;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.styled-btn:hover {
+  background: #9e8a76;
+}
+
+.back-btn {
+  position: absolute;
+  left: 20px;
+  top: 15px;
+}
+
+/* ---------------------------------------------------------
+   GRID
+--------------------------------------------------------- */
 
 .grid {
   display: grid;
@@ -32,11 +74,9 @@ button {
   grid-template-columns: repeat(5, 80px);
 }
 
-
-
-/* =========================================================
-    COMPONENTS — TILES
-========================================================= */
+/* ---------------------------------------------------------
+   TILES
+--------------------------------------------------------- */
 
 .tile {
   width: 80px;
@@ -63,11 +103,17 @@ button {
 }
 
 @keyframes pop {
-  0% { transform: scale(0.6); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-/* Animation de fusion */
+/* Animation fusion */
 .tile.merged {
   animation: merge-pop 0.3s ease-out;
 }
@@ -87,7 +133,7 @@ button {
   }
 }
 
-/* Couleurs numéros */
+/* Couleurs tuiles */
 .tile-2 { background-color: #eee4da; color: #776e65; font-size:22px; }
 .tile-4 { background-color: #ede0c8; color: #776e65; font-size:22px; }
 .tile-8 { background-color: #f2b179; font-size:22px; }
@@ -99,22 +145,20 @@ button {
 .tile-512 { background-color: #edc850; font-size:22px; }
 .tile-1024 { background-color: #edc53f; font-size:20px; }
 .tile-2048 { background-color: #edc22e; font-size:20px; }
-.tile-4096  { background-color: #3c3a32; font-size:20px; }
-.tile-8192  { background-color: #5c5a52; font-size:20px; }
+.tile-4096 { background-color: #3c3a32; font-size:20px; }
+.tile-8192 { background-color: #5c5a52; font-size:20px; }
 .tile-16384 { background-color: #776e65; font-size:20px; }
 .tile-32768 { background-color: #9c8f80; font-size:18px; }
 .tile-65536 { background-color: #bbada0; font-size:18px; }
 .tile-131072 { background-color: #d6cec4; font-size:18px; }
 
-
-
-/* =========================================================
-    PAGES — GAME
-========================================================= */
+/* ---------------------------------------------------------
+   GAME PAGE
+--------------------------------------------------------- */
 
 .game-page {
   text-align: center;
-  padding-top: 30px;
+  padding-top: 20px;
 }
 
 .scoreboard {
@@ -129,73 +173,37 @@ button {
   color: white;
   padding: 12px 20px;
   border-radius: 6px;
+  font-size: 14px;
+}
+
+/* ---------------------------------------------------------
+   PAUSE OVERLAY
+--------------------------------------------------------- */
+
+.pause-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pause-box {
+  background: rgba(50,50,50,0.8);
+  padding: 25px 40px;
+  border-radius: 10px;
+  border: 2px solid #8f7a66;
+  color: white;
   font-size: 16px;
 }
 
-
-
-/* =========================================================
-    PAGES — HOME
-========================================================= */
-
-.home {
-  text-align: center;
-  padding-top: 40px;
-}
-
-.home .actions {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 200px;
-  margin: 25px auto 0;
-}
-
-.home button {
-  padding: 12px 18px;
-  font-size: 14px; /* ajusté pour la font pixel */
-  border-radius: 6px;
-  border: none;
-  background-color: #8f7a66;
-  color: white;
-  cursor: pointer;
-  transition: background 0.2s ease-in-out;
-}
-
-.home button:hover {
-  background-color: #9e8a76;
-}
-
-
-
-/* =========================================================
-    PAGES — LEADERBOARD
-========================================================= */
-
-.leaderboard-page {
-  text-align: center;
-  padding-top: 40px;
-}
-
-.leaderboard-page ol {
-  list-style: none;
-  padding: 0;
-}
-
-.leaderboard-page li {
-  background: #eee4da;
-  padding: 10px 15px;
-  margin: 10px auto;
-  width: 200px;
-  border-radius: 6px;
-  font-weight: bold;
-}
-
-
-
-/* =========================================================
-    PAGES — GAMEOVER
-========================================================= */
+/* ---------------------------------------------------------
+   GAME OVER
+--------------------------------------------------------- */
 
 .gameover-modal {
   position: fixed;
@@ -229,4 +237,111 @@ button {
 
 .gameover-box button:hover {
   background: #9e8a76;
+}
+
+/* ---------------------------------------------------------
+   HOME PAGE
+--------------------------------------------------------- */
+
+.home {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.home .actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 200px;
+  margin: 25px auto 0;
+}
+
+.home button {
+  padding: 12px 18px;
+  font-size: 18px;
+  border-radius: 6px;
+  border: none;
+  background-color: #8f7a66;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.home button:hover {
+  background-color: #9e8a76;
+}
+
+/* ---------------------------------------------------------
+   LEADERBOARD
+--------------------------------------------------------- */
+
+.leaderboard-page {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.leaderboard-page ol {
+  list-style: none;
+  padding: 0;
+}
+
+.leaderboard-page li {
+  background: #eee4da;
+  padding: 10px 15px;
+  margin: 10px auto;
+  width: 200px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+/* ---------------------------------------------------------
+   FOOTER COMMANDS
+--------------------------------------------------------- */
+
+.footer {
+  margin-top: 40px;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer li {
+  margin: 8px 0;
+}
+
+/* =========================================================
+   PLAYER NAME POPUP
+========================================================= */
+
+.name-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.name-box {
+  background: #faf8ef;
+  padding: 25px 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 260px;
+  border: 2px solid #8f7a66;
+}
+
+.name-input {
+  width: 90%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #8f7a66;
+  border-radius: 6px;
+  font-family: "Press Start 2P", cursive;
+  font-size: 12px;
 }

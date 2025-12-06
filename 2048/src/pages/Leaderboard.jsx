@@ -5,15 +5,15 @@ export default function Leaderboard() {
   const [scores, setScores] = useState([]);
 
   useEffect(() => {
-    async function fetchScores() {
+    async function load() {
       const data = await getLeaderboard();
 
-      // tri par meilleur score
+      // tri du meilleur au moins bon
       data.sort((a, b) => b.score - a.score);
+
       setScores(data);
     }
-
-    fetchScores();
+    load();
   }, []);
 
   return (
@@ -21,7 +21,7 @@ export default function Leaderboard() {
       <h2>Leaderboard</h2>
 
       {scores.length === 0 ? (
-        <p>Aucun score pour le moment...</p>
+        <p>Chargement...</p>
       ) : (
         <ol>
           {scores.map((entry) => (

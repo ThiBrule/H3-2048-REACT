@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Grid from "../components/Grid";
+import PlayerName from "../components/PlayerName";
+
 import {
   createEmptyGrid,
   addRandomTile,
@@ -9,19 +11,35 @@ import {
   moveDown,
   isGameOver
 } from "../utils";
+
 import { postScore } from "../api";
 
-export default function Game({ gridSize }) {
+export default function Game({ gridSize, headerControls }) {
+  // ---------------------------------
+  // PSEUDO JOUEUR
+  // ---------------------------------
+  const savedName = localStorage.getItem("playerName") || "";
+  const [playerName, setPlayerName] = useState(savedName);
+
+  // ❗ POPUP SUPPRIMÉE ICI (comme demandé)
+  // if (!playerName) {
+  //   return <PlayerName onSave={setPlayerName} />;
+  // }
+
+  // ---------------------------------
+  // STATES DU JEU
+  // ---------------------------------
   const [grid, setGrid] = useState(null);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(
     Number(localStorage.getItem("bestScore")) || 0
   );
   const [gameOver, setGameOver] = useState(false);
+  const [paused, setPaused] = useState(false);
 
-  // -----------------------------
-  // INITIALISATION DU JEU
-  // -----------------------------
+  // ---------------------------------
+  // INITIALISATION
+  // ---------------------------------
   useEffect(() => {
     let g = createEmptyGrid(gridSize);
     g = addRandomTile(g);
@@ -29,11 +47,12 @@ export default function Game({ gridSize }) {
     setGrid(g);
     setScore(0);
     setGameOver(false);
+    setPaused(false);
   }, [gridSize]);
 
-  // -----------------------------
+  // ---------------------------------
   // SCORE & BEST SCORE
-  // -----------------------------
+  // ---------------------------------
   function updateScore(gained) {
     const newScore = score + gained;
     setScore(newScore);
@@ -44,19 +63,39 @@ export default function Game({ gridSize }) {
     }
   }
 
-  // -----------------------------
-  // ENVOI DU SCORE À L'API
-  // -----------------------------
+  // ---------------------------------
+  // API — POST SCORE FINAL
+  // ---------------------------------
   async function sendScoreToAPI(finalScore) {
-    await postScore("Player", finalScore);
+    if (!playerName) return;
+    try {
+      await postScore(playerName, finalScore);
+    } catch (error) {
+      console.error("Erreur API :", error);
+    }
   }
 
-  // -----------------------------
-  // GESTION DES TOUCHES
-  // -----------------------------
+  // ---------------------------------
+  // PAUSE & RESTART depuis le Header
+  // ---------------------------------
+  useEffect(() => {
+    if (!headerControls) return;
+
+    headerControls.current.pause = () => {
+      setPaused((prev) => !prev);
+    };
+
+    headerControls.current.restart = () => {
+      restart();
+    };
+  });
+
+  // ---------------------------------
+  // TOUCHES CLAVIER
+  // ---------------------------------
   useEffect(() => {
     function handleKey(e) {
-      if (!grid || gameOver) return;
+      if (!grid || gameOver || paused) return;
 
       const moves = {
         ArrowLeft: moveLeft,
@@ -70,7 +109,6 @@ export default function Game({ gridSize }) {
 
       const result = fn(grid);
 
-      // si rien ne change : pas de mouvement
       if (JSON.stringify(result.grid) === JSON.stringify(grid)) return;
 
       updateScore(result.gained);
@@ -79,19 +117,20 @@ export default function Game({ gridSize }) {
       setGrid(newGrid);
 
       if (isGameOver(newGrid)) {
+        const finalScore = score + result.gained;
         setGameOver(true);
-        sendScoreToAPI(score + result.gained);
+        sendScoreToAPI(finalScore);
       }
     }
 
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
 
-  }, [grid, score, gameOver]);
+  }, [grid, score, gameOver, paused]);
 
-  // -----------------------------
+  // ---------------------------------
   // RESTART
-  // -----------------------------
+  // ---------------------------------
   function restart() {
     let g = createEmptyGrid(gridSize);
     g = addRandomTile(g);
@@ -99,16 +138,16 @@ export default function Game({ gridSize }) {
     setGrid(g);
     setScore(0);
     setGameOver(false);
+    setPaused(false);
   }
 
-  // -----------------------------
+  // ---------------------------------
   // RENDER
-  // -----------------------------
+  // ---------------------------------
   if (!grid) return <p>Chargement…</p>;
 
   return (
     <div className="game-page">
-      <h2>2048</h2>
 
       <div className="scoreboard">
         <div className="box">Score : {score}</div>
@@ -117,12 +156,22 @@ export default function Game({ gridSize }) {
 
       <Grid grid={grid} />
 
+      {/* PAUSE */}
+      {paused && !gameOver && (
+        <div className="pause-overlay">
+          <div className="pause-box" onClick={() => setPaused(false)}>
+            <p>Clique pour reprendre</p>
+          </div>
+        </div>
+      )}
+
+      {/* GAME OVER */}
       {gameOver && (
         <div className="gameover-modal">
           <div className="gameover-box">
             <h2>GAME OVER</h2>
             <p>Score : {score}</p>
-            <p>Best : {bestScore}</p>
+            <p>Meilleur : {bestScore}</p>
 
             <button onClick={restart}>Rejouer</button>
           </div>

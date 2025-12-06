@@ -1,22 +1,26 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import PlayerName from "../components/PlayerName";
 
 export default function Home() {
+  const navigate = useNavigate();
+
+  const savedName = localStorage.getItem("playerName");
+  const [playerName, setPlayerName] = useState(savedName || "");
+
+  // Si aucun pseudo → popup
+  if (!playerName) {
+    return <PlayerName onSave={setPlayerName} />;
+  }
+
   return (
     <div className="home">
-      <h1>2048 Challenge</h1>
+      <h1>2048</h1>
 
       <div className="actions">
-        <Link to="/game/4">
-          <button>Grille 4×4</button>
-        </Link>
-
-        <Link to="/game/5">
-          <button>Grille 5×5</button>
-        </Link>
-
-        <Link to="/leaderboard">
-          <button>Leaderboard</button>
-        </Link>
+        <button onClick={() => navigate("/game/4")}>Grille 4×4</button>
+        <button onClick={() => navigate("/game/5")}>Grille 5×5</button>
+        <button onClick={() => navigate("/leaderboard")}>Leaderboard</button>
       </div>
     </div>
   );
