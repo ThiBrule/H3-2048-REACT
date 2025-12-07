@@ -58,7 +58,6 @@ export default function Game({ gridSize, headerControls }) {
     }
   }
 
-
   useEffect(() => {
     if (!headerControls) return;
 
@@ -80,7 +79,12 @@ export default function Game({ gridSize, headerControls }) {
         ArrowRight: moveRight,
         ArrowUp: moveUp,
         ArrowDown: moveDown,
+        z: moveUp,
+        s: moveDown,
+        q:moveLeft,
+        d:moveRight,
       };
+      
 
       const fn = moves[e.key];
       if (!fn) return;
